@@ -2,6 +2,7 @@ export interface UserResponseDto {
     id: number;
     userId: string;
     userName: string;
+    totalFocusTime: number; // 총 누적 집중시간 (초 단위)
 }
 
 export interface UserRequestDto {
@@ -33,7 +34,14 @@ export interface TodoResponseDto {
     title: string;
     description?: string;
     status: Status;
-    createdAt: string;
-    updatedAt: string;
+    totalFocusTime: number;
     user: UserResponseDto;
+}
+
+// Point 관련 타입 정의
+export interface PointResponseDto {
+    totalPoints: number;
+    totalFocusTimeUsed: number;
+    newPointsEarned: number;
+    message: string;
 }

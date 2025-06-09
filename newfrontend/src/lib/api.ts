@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { TodoRequestDto, TodoResponseDto, Status, UserRequestDto, UserResponseDto, LoginRequestDto } from './types';
+import { TodoRequestDto, TodoResponseDto, Status, UserRequestDto, UserResponseDto, LoginRequestDto, PointResponseDto } from './types';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
     withCredentials: true,
 });
 
@@ -92,6 +92,27 @@ export const todoApi = {
     // 할 일 상태 변경 (칸반보드용)
     updateTodoStatus: async (id: number, status: Status): Promise<TodoResponseDto> => {
         const response = await api.patch(`/todos/${id}/status?status=${status}`);
+        return response.data;
+    },
+
+    // 집중시간 업데이트
+    updateFocusTime: async (id: number, focusTime: number): Promise<TodoResponseDto> => {
+        const response = await api.patch(`/todos/${id}/focus-time?focusTime=${focusTime}`);
+        return response.data;
+    }
+};
+
+// Point API 함수들
+export const pointApi = {
+    // 사용자 포인트 조회
+    getUserPoints: async (userId: number): Promise<PointResponseDto> => {
+        const response = await api.get(`/points/${userId}`);
+        return response.data;
+    },
+
+    // 포인트 계산 및 업데이트
+    calculateAndUpdatePoints: async (userId: number): Promise<PointResponseDto> => {
+        const response = await api.post(`/points/${userId}/calculate`);
         return response.data;
     }
 };

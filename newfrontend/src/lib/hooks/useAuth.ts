@@ -32,6 +32,12 @@ export const useAuth = () => {
             setError(null);
             const response = await authApi.login(data);
             setUser(response.user);
+            
+            // 로그인 성공 후 페이지 새로고침
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
+            
             return response;
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : '로그인에 실패했습니다.';
@@ -46,6 +52,10 @@ export const useAuth = () => {
             setError(null);
             await authApi.logout();
             setUser(null);
+            
+            // 로그아웃 성공 후 페이지 새로고침
+            setTimeout(() => {window.location.reload();}, 100);
+            
         } catch (err) {
             setError(err instanceof Error ? err.message : '로그아웃에 실패했습니다.');
             throw err;

@@ -52,4 +52,10 @@ public class TodoController {
     public TodoResponseDto updateTodoStatus(@PathVariable Long id, @RequestParam Status status) {
         return todoService.updateTodoStatus(id, status);
     }
+
+    // 집중시간 업데이트
+    @PatchMapping("/{id}/focus-time")
+    public TodoResponseDto updateFocusTime(@PathVariable Long id, @RequestParam Long focusTime) {
+        return todoService.updateTodoFocusTime(id, focusTime);
+    }
 }

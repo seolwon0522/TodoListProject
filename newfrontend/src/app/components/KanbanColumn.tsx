@@ -8,10 +8,11 @@ interface KanbanColumnProps {
     status: Status;
     todos: TodoResponseDto[];
     onMoveTodo: (todoId: number, newStatus: Status) => void;
+    onDeleteTodo: (todoId: number) => void;
     color: 'gray' | 'yellow' | 'green';
 }
 
-export default function KanbanColumn({ title, status, todos, onMoveTodo, color }: KanbanColumnProps) {
+export default function KanbanColumn({ title, status, todos, onMoveTodo, onDeleteTodo, color }: KanbanColumnProps) {
     const getColumnColors = (color: string) => {
         switch (color) {
             case 'gray':
@@ -84,6 +85,7 @@ export default function KanbanColumn({ title, status, todos, onMoveTodo, color }
                             key={todo.id}
                             todo={todo}
                             onMoveTodo={onMoveTodo}
+                            onDeleteTodo={onDeleteTodo}
                         />
                     ))
                 )}

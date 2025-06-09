@@ -11,8 +11,7 @@ export default function Navigation() {
     const handleLogout = async () => {
         try {
             await logout();
-            // 로그아웃 후 홈으로 이동
-            window.location.href = '/';
+            // useAuth 훅에서 페이지 새로고침을 처리함
         } catch (error) {
             console.error('로그아웃 실패:', error);
         }
@@ -21,7 +20,6 @@ export default function Navigation() {
     // 인증된 사용자용 메뉴
     const authenticatedNavItems = [
         { href: '/', label: '홈', icon: '🏠' },
-        { href: '/todos', label: '할 일 목록', icon: '📝' },
         { href: '/kanban', label: '칸반보드', icon: '📋' },
         { href: '/me', label: '내 정보', icon: '👨‍💼' },
     ];

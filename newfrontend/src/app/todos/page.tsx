@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { useTodos } from '../../lib/hooks/useTodos';
+import { useAuth } from '../../lib/hooks/useAuth';
 import { TodoRequestDto, Status } from '../../lib/types';
 import TodoForm from '../components/TodoForm';
 import TodoItem from '../components/TodoItem';
 
 export default function TodosPage() {
     const { todos, loading, error, createTodo, updateTodo, deleteTodo, updateTodoStatus } = useTodos();
+    const { user, isAuthenticated } = useAuth();
     const [showForm, setShowForm] = useState(false);
     const [editingTodo, setEditingTodo] = useState<number | null>(null);
 
@@ -58,6 +60,24 @@ export default function TodosPage() {
         );
     }
 
+    // 로그인하지 않은 사용자 처리
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="bg-white rounded-lg shadow-sm p-8 text-center max-w-md">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">로그인이 필요합니다</h2>
+                    <p className="text-gray-600 mb-6">할 일 관리와 포인트 시스템을 이용하려면 로그인해주세요.</p>
+                    <button 
+                        onClick={() => window.location.href = '/login'}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    >
+                        로그인하러 가기
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,6 +96,8 @@ export default function TodosPage() {
                         </button>
                     </div>
                 </div>
+
+
 
                 {/* 에러 메시지 */}
                 {error && (

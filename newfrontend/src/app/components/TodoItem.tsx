@@ -48,16 +48,6 @@ export default function TodoItem({
         }
     };
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
-
     if (isEditing) {
         return (
             <div className="bg-white rounded-lg shadow-sm p-6">
@@ -92,14 +82,6 @@ export default function TodoItem({
                     {todo.description && (
                         <p className="text-gray-600 mb-3">{todo.description}</p>
                     )}
-
-                    {/* 날짜 정보 */}
-                    <div className="text-sm text-gray-500 space-y-1">
-                        <p>생성일: {formatDate(todo.createdAt)}</p>
-                        {todo.updatedAt !== todo.createdAt && (
-                            <p>수정일: {formatDate(todo.updatedAt)}</p>
-                        )}
-                    </div>
                 </div>
 
                 {/* 액션 버튼들 */}

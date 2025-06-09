@@ -7,7 +7,8 @@ import com.example.TodoListProject.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,50 +16,35 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class DataMigration implements CommandLineRunner {
+public class DataMigration implements ApplicationRunner {
 
-    private final TodoRepository todoRepository;
     private final UserRepository userRepository;
+    private final TodoRepository todoRepository;
 
     @Override
     @Transactional
-    public void run(String... args) {
-        // 사용자 수 확인
-        long userCount = userRepository.count();
-        if (userCount == 0) {
-            log.info("사용자가 없습니다. 데이터 마이그레이션을 건너뜁니다.");
-            return;
+    public void run(ApplicationArguments args) throws Exception {
+        log.info("=== User totalFocusTime 마이그레이션 시작 ===");
+        
+        // 모든 사용자 조회
+        List<User> users = userRepository.findAll();
+        
+        for (User user : users) {
+            // 사용자의 모든 할 일의 집중시간 합계 계산
+            List<Todo> userTodos = todoRepository.findByUser(user);
+            long totalFocusTime = userTodos.stream()
+                    .mapToLong(todo -> todo.getTotalFocusTime() != null ? todo.getTotalFocusTime() : 0L)
+                    .sum();
+            
+            // User의 totalFocusTime 업데이트 (기존 값이 0이거나 null인 경우에만)
+            if (user.getTotalFocusTime() == null || user.getTotalFocusTime() == 0L) {
+                user.setTotalFocusTime(totalFocusTime);
+                userRepository.save(user);
+                log.info("사용자 ID: {}, 이름: {}, 총 집중시간: {}초로 업데이트", 
+                        user.getId(), user.getUserName(), totalFocusTime);
+            }
         }
-
-        // 사용자가 할당되지 않은 Todo 항목 찾기
-        List<Todo> orphanedTodos = todoRepository.findAll().stream()
-                .filter(todo -> todo.getUser() == null)
-                .toList();
-
-        if (orphanedTodos.isEmpty()) {
-            log.info("마이그레이션이 필요한 Todo 항목이 없습니다.");
-            return;
-        }
-
-        log.info("마이그레이션할 Todo 항목 수: {}", orphanedTodos.size());
-
-        // 첫 번째 사용자 가져오기
-        User firstUser = userRepository.findAll().stream()
-                .findFirst()
-                .orElse(null);
-
-        if (firstUser == null) {
-            log.error("사용자를 찾을 수 없습니다. 데이터 마이그레이션을 건너뜁니다.");
-            return;
-        }
-
-        // 모든 Todo 항목을 첫 번째 사용자에게 할당
-        for (Todo todo : orphanedTodos) {
-            todo.setUser(firstUser);
-            todoRepository.save(todo);
-        }
-
-        log.info("데이터 마이그레이션 완료: {} 개의 Todo 항목이 사용자 ID {}에 할당되었습니다.",
-                orphanedTodos.size(), firstUser.getId());
+        
+        log.info("=== User totalFocusTime 마이그레이션 완료 ===");
     }
 } 

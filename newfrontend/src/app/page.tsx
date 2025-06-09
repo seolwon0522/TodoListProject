@@ -14,37 +14,31 @@ export default function Home() {
           </p>
           
           {/* 주요 기능 버튼들 */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/todos"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
-            >
-              📝 할 일 목록 보기
-            </Link>
+          <div className="flex justify-center">
             <Link 
               href="/kanban"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
             >
-              📋 칸반보드 보기
+              📋 칸반보드에서 할 일 관리하기
             </Link>
           </div>
         </div>
 
         {/* 기능 소개 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="text-3xl mb-4">📝</div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">할 일 관리</h3>
-            <p className="text-gray-600">
-              할 일을 생성, 수정, 삭제하고 상태를 관리할 수 있습니다.
-            </p>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="text-3xl mb-4">📋</div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">칸반보드</h3>
             <p className="text-gray-600">
-              드래그 앤 드롭으로 직관적으로 할 일의 진행 상태를 관리하세요.
+              드래그 앤 드롭으로 직관적으로 할 일의 진행 상태를 관리하고, 새로운 할 일을 바로 생성하세요.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="text-3xl mb-4">⏱️</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">집중시간 추적</h3>
+            <p className="text-gray-600">
+              할 일을 진행하는 동안 자동으로 집중시간을 추적하고 포인트를 획득하세요.
             </p>
           </div>
 
@@ -52,7 +46,7 @@ export default function Home() {
             <div className="text-3xl mb-4">🔐</div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">개인화</h3>
             <p className="text-gray-600">
-              개인 계정으로 로그인하여 나만의 할 일 목록을 관리하세요.
+              개인 계정으로 로그인하여 나만의 할 일과 포인트를 관리하세요.
             </p>
           </div>
         </div>

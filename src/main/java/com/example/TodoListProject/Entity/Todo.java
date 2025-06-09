@@ -26,4 +26,8 @@ public class Todo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    
+    // 총 집중 시간 (초 단위)
+    @Builder.Default
+    private Long totalFocusTime = 0L;
 }

@@ -42,7 +42,7 @@ export default function LoginPage() {
         try {
             setIsSubmitting(true);
             await login({ userId, userPw });
-            // 로그인 성공 시 useEffect에서 리다이렉트 처리
+            // 로그인 성공 시 useAuth 훅에서 페이지 새로고침 처리
         } catch (err) {
             console.error('로그인 실패:', err);
             // useAuth 훅에서 에러 상태를 관리하므로 별도 처리 불필요

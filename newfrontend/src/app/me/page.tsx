@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../lib/hooks/useAuth';
 import { useTodos } from '../../lib/hooks/useTodos';
+import PointDisplay from '../components/PointDisplay';
 import Link from 'next/link';
 
 export default function MePage() {
@@ -27,7 +28,7 @@ export default function MePage() {
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
                     <p className="mt-4 text-gray-600">사용자 정보를 불러오는 중...</p>
                 </div>
-            </div>
+            </div> 
         );
     }
 
@@ -99,6 +100,11 @@ export default function MePage() {
                     </div>
                 </div>
 
+                {/* 포인트 정보 */}
+                <div className="mb-6">
+                    <PointDisplay userId={user.id} />
+                </div>
+
                 {/* 할 일 통계 */}
                 <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">나의 할 일 통계</h2>
@@ -125,25 +131,15 @@ export default function MePage() {
                 {/* 빠른 액션 */}
                 <div className="bg-white rounded-lg shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">빠른 액션</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Link
-                            href="/todos"
-                            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                        >
-                            <div className="text-2xl mr-4">📝</div>
-                            <div>
-                                <h3 className="font-medium text-gray-900">할 일 목록</h3>
-                                <p className="text-sm text-gray-600">모든 할 일을 리스트로 확인하고 관리하세요</p>
-                            </div>
-                        </Link>
+                    <div className="flex justify-center">
                         <Link
                             href="/kanban"
-                            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                            className="flex items-center p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors max-w-md"
                         >
-                            <div className="text-2xl mr-4">📋</div>
+                            <div className="text-3xl mr-4">📋</div>
                             <div>
-                                <h3 className="font-medium text-gray-900">칸반보드</h3>
-                                <p className="text-sm text-gray-600">드래그 앤 드롭으로 할 일 상태를 관리하세요</p>
+                                <h3 className="font-medium text-gray-900">칸반보드로 이동</h3>
+                                <p className="text-sm text-gray-600">할 일을 생성하고 드래그 앤 드롭으로 상태를 관리하세요</p>
                             </div>
                         </Link>
                     </div>

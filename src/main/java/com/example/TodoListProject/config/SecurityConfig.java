@@ -32,9 +32,10 @@ public class SecurityConfig {
                                 "/users/login",
                                 "/logout",
                                 "/users/me",
-                                "/error"
+                                "/error",
+                                "/points/**"
 
-                        ).permitAll() // 회원가입, 로그인, 사용자 목록은 인증 없이 접근 허용
+                        ).permitAll()
 
                         .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 );

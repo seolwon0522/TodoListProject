@@ -12,8 +12,15 @@ public class TodoResponseDto {
     private String title;
     private String description;
     private Status status;
+    private Long totalFocusTime;
 
     public static TodoResponseDto fromEntity(Todo todo){
-        return new TodoResponseDto(todo.getId(), todo.getTitle(), todo.getDescription(), todo.getStatus());
+        return new TodoResponseDto(
+            todo.getId(), 
+            todo.getTitle(), 
+            todo.getDescription(), 
+            todo.getStatus(),
+            todo.getTotalFocusTime() != null ? todo.getTotalFocusTime() : 0L
+        );
     }
 }

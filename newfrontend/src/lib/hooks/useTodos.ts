@@ -154,6 +154,30 @@ export const useTodosByStatus = () => {
         }
     };
 
+    // 할 일 삭제 (칸반보드용)
+    const deleteTodo = async (todoId: number) => {
+        try {
+            setError(null);
+            await todoApi.deleteTodo(todoId);
+            
+            // 모든 상태에서 해당 todo 제거
+            setTodosByStatus(prev => {
+                const newState = { ...prev };
+                
+                Object.keys(newState).forEach(status => {
+                    newState[status as Status] = newState[status as Status].filter(
+                        todo => todo.id !== todoId
+                    );
+                });
+                
+                return newState;
+            });
+        } catch (err) {
+            setError(err instanceof Error ? err.message : '할 일 삭제에 실패했습니다.');
+            throw err;
+        }
+    };
+
     useEffect(() => {
         fetchTodosByStatus();
     }, []);
@@ -163,6 +187,7 @@ export const useTodosByStatus = () => {
         loading,
         error,
         fetchTodosByStatus,
-        moveTodo
+        moveTodo,
+        deleteTodo
     };
 }; 
