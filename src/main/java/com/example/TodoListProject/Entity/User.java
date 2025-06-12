@@ -24,4 +24,9 @@ public class User {
     @Builder.Default
     @Column(name = "total_focus_time")
     private Long totalFocusTime = 0L;
+    
+    // 현재 보유 포인트
+    @Builder.Default
+    @Column(name = "current_points")
+    private Long currentPoints = 0L;
 }

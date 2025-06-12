@@ -21,6 +21,7 @@ export default function Navigation() {
     const authenticatedNavItems = [
         { href: '/', label: '홈', icon: '🏠' },
         { href: '/kanban', label: '칸반보드', icon: '📋' },
+        { href: '/shop', label: '상점', icon: '🛍️' },
         { href: '/me', label: '내 정보', icon: '👨‍💼' },
     ];
 

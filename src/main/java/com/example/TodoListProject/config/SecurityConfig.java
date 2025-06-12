@@ -33,11 +33,12 @@ public class SecurityConfig {
                                 "/logout",
                                 "/users/me",
                                 "/error",
-                                "/points/**"
+                                "/points/**",
+                                "/shop/**"
 
                         ).permitAll()
 
-                        .anyRequest().authenticated() // 나머지 요청은 인증 필요
+                        .anyRequest().authenticated() // 나머지 요청은 인증 필요 X
                 );
         return http.build();
     }

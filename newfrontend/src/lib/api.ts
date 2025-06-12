@@ -117,4 +117,37 @@ export const pointApi = {
     }
 };
 
+// Shop API 함수들
+export const shopApi = {
+    // 모든 상점 아이템 조회 (사용자별)
+    getAllShopItems: async (userId: number): Promise<import('./types').ShopItemDto[]> => {
+        const response = await api.get(`/shop/items/${userId}`);
+        return response.data;
+    },
+
+    // 카테고리별 상점 아이템 조회
+    getShopItemsByCategory: async (userId: number, category: import('./types').ShopCategory): Promise<import('./types').ShopItemDto[]> => {
+        const response = await api.get(`/shop/items/${userId}/category/${encodeURIComponent(category)}`);
+        return response.data;
+    },
+
+    // 아이템 구매
+    purchaseItem: async (request: import('./types').PurchaseRequestDto): Promise<import('./types').PurchaseResponseDto> => {
+        const response = await api.post('/shop/purchase', request);
+        return response.data;
+    },
+
+    // 사용자 구매 기록 조회
+    getUserPurchaseHistory: async (userId: number): Promise<import('./types').UserPurchase[]> => {
+        const response = await api.get(`/shop/purchases/${userId}`);
+        return response.data;
+    },
+
+    // 구매 가능한 아이템들 조회
+    getAffordableItems: async (userId: number): Promise<import('./types').ShopItemDto[]> => {
+        const response = await api.get(`/shop/affordable/${userId}`);
+        return response.data;
+    }
+};
+
 export default api;
